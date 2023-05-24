@@ -36,39 +36,44 @@ namespace PracticeNumber2
             Console.WriteLine("Ingrese la opción deseada: \n1- Crear Usuario\n2- Obtener Usuarios\n3- Modificar Usuario\n4- Eliminar Usuario\n");
             Console.Write("Escriba la opción: ");
             var opcion = int.TryParse(Console.ReadLine(), out var opcionElegida);
-            var newUser = new User();
 
-            if (opcionElegida != 0 && opcionElegida < 5)
+            while (opcionElegida != 0 && opcionElegida < 5)
             {
-                while (opcionElegida != 0 && opcionElegida < 5)
+                switch (opcionElegida)
                 {
-                    switch (opcionElegida)
-                    {
-                        case 1:
-                            newUser.Id = userList.Count + 1;
+                    case 1:
+                        var newUser = new User();
 
-                            Console.Write("\nIngrese el nombre: ");
-                            newUser.Name = Console.ReadLine();
+                        //var idPosition = userList[userList.Count - 1].Id;-----> Lo que me dijo Jona
+                        var idPosition = userList.Last().Id; //------> Lo que hice yo.
 
-                            Console.Write("Ingrese el mail: ");
-                            newUser.Mail = Console.ReadLine();
+                        Console.Write("\nIngrese el nombre: ");
+                        newUser.Name = Console.ReadLine();
 
-                            Console.Write("Ingrese el contraseña: ");
-                            newUser.Password = Console.ReadLine();
+                        Console.Write("Ingrese el mail: ");
+                        newUser.Mail = Console.ReadLine();
 
-                            userList.Add(newUser);
-                            break;
-                        case 2:
-                            foreach (var user in userList)
-                            {
-                                Console.WriteLine("Id: " + user.Id + " // " + "Nombre: " + user.Name + " // " + "Mail: " + user.Mail + " // " + "Contraseña: " + user.Password);
-                            }
-                            break;
-                        case 3:
-                            Console.Write("\nIngrese el Id: ");
-                            var id = int.TryParse(Console.ReadLine(), out int idSeleccionado);
-                            var userById = userList.Where(x => x.Id == idSeleccionado).FirstOrDefault();
+                        Console.Write("Ingrese el contraseña: ");
+                        newUser.Password = Console.ReadLine();
+
+                        newUser.Id = idPosition + 1;
+
+                        userList.Add(newUser);
+                        break;
+                    case 2:
+                        foreach (var user in userList)
+                        {
+                            Console.WriteLine("Id: " + user.Id + " // " + "Nombre: " + user.Name + " // " + "Mail: " + user.Mail + " // " + "Contraseña: " + user.Password);
+                        }
+                        break;
+                    case 3:
+                        Console.Write("\nIngrese el Id: ");
+                        var id = int.TryParse(Console.ReadLine(), out int idSeleccionado);
+                        var userById = userList.Where(x => x.Id == idSeleccionado).FirstOrDefault();
+                        if (userById != null)
+                        {
                             Console.WriteLine("Id: " + userById.Id + " // " + "Nombre: " + userById.Name + " // " + "Mail: " + userById.Mail + " // " + "Contraseña: " + userById.Password);
+
 
                             Console.Write("\nDesea modificarlo? Si/No: ");
                             var respuesta = Console.ReadLine();
@@ -85,11 +90,18 @@ namespace PracticeNumber2
                                 userById.Password = Console.ReadLine();
                             }
                             Console.WriteLine("Id: " + userById.Id + " // " + "Nombre: " + userById.Name + " // " + "Mail: " + userById.Mail + " // " + "Contraseña: " + userById.Password);
-                            break;
-                        case 4:
-                            Console.Write("\nIngrese el Id: ");
-                            var idDelete = int.TryParse(Console.ReadLine(), out int idElegido);
-                            var userDelete = userList.Where(x => x.Id == idElegido).FirstOrDefault();
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nId no encontrado.");
+                        }
+                        break;
+                    case 4:
+                        Console.Write("\nIngrese el Id: ");
+                        var idDelete = int.TryParse(Console.ReadLine(), out int idElegido);
+                        var userDelete = userList.Where(x => x.Id == idElegido).FirstOrDefault();
+                        if(userDelete != null)
+                        {
                             Console.WriteLine("Id: " + userDelete.Id + " // " + "Nombre: " + userDelete.Name + " // " + "Mail: " + userDelete.Mail + " // " + "Contraseña: " + userDelete.Password);
 
                             Console.Write("\nDesea eliminarlo? Si/No: ");
@@ -99,24 +111,24 @@ namespace PracticeNumber2
                                 userList.Remove(userDelete);
                                 Console.WriteLine("El usuario ha sido eliminado");
                             }
-                            break;
-                        default:
-                            Console.WriteLine("\nOpción incorrecta.");
-                            break;
-                    }
-
-                    Console.WriteLine("\nIngrese la opción deseada: \n1- Crear Usuario\n2- Obtener Usuarios\n3- Modificar Usuario\n4- Eliminar Usuario");
-                    Console.Write("\nEscriba la opción: ");
-                    opcion = int.TryParse(Console.ReadLine(), out opcionElegida);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nId no encontrado.");
+                        }
+                        
+                        break;
                 }
 
-                Console.WriteLine("\nOpción incorrecta. El programa ha finalizado!");
+                Console.WriteLine("\nIngrese la opción deseada: \n1- Crear Usuario\n2- Obtener Usuarios\n3- Modificar Usuario\n4- Eliminar Usuario");
+                Console.Write("\nEscriba la opción: ");
+                opcion = int.TryParse(Console.ReadLine(), out opcionElegida);
+            }
 
-            }
-            else
-            {
-                Console.WriteLine("\nOpción incorrecta. El programa ha finalizado!");
-            }
+            Console.WriteLine("\nOpción incorrecta. El programa ha finalizado!");
+
+            Console.ReadLine();
+
         }
     }
 }
