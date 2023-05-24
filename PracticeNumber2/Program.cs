@@ -42,48 +42,23 @@ namespace PracticeNumber2
                 switch (opcionElegida)
                 {
                     case 1:
-                        //var idPosition = userList[userList.Count - 1].Id;-----> Lo que me dijo Jona                        
-                        if(userList.Count == 0)
-                        {
-                            var newUser = new User();
+                        var newUser = new User();
 
-                            newUser.Id = userList.Count + 1;
+                        newUser.Id = !userList.Any() ? 1 : userList.Last().Id + 1;
 
-                            Console.Write("\nIngrese el nombre: ");
-                            newUser.Name = Console.ReadLine();
+                        Console.Write("\nIngrese el nombre: ");
+                        newUser.Name = Console.ReadLine();
 
-                            Console.Write("Ingrese el mail: ");
-                            newUser.Mail = Console.ReadLine();
+                        Console.Write("Ingrese el mail: ");
+                        newUser.Mail = Console.ReadLine();
 
-                            Console.Write("Ingrese el contraseña: ");
-                            newUser.Password = Console.ReadLine();
+                        Console.Write("Ingrese el contraseña: ");
+                        newUser.Password = Console.ReadLine();
 
-                            userList.Add(newUser);
-
-                        }
-                        else
-                        {
-                            var newUser = new User();
-                            var idPosition = userList.Last().Id; //------> Lo que hice yo.
-
-                            Console.Write("\nIngrese el nombre: ");
-                            newUser.Name = Console.ReadLine();
-
-                            Console.Write("Ingrese el mail: ");
-                            newUser.Mail = Console.ReadLine();
-
-                            Console.Write("Ingrese el contraseña: ");
-                            newUser.Password = Console.ReadLine();
-
-                            newUser.Id = idPosition + 1;
-
-                            userList.Add(newUser);
-                        }
-
-                       
+                        userList.Add(newUser);
                         break;
                     case 2:
-                        if(userList.Count > 0)
+                        if (userList.Count > 0)
                         {
                             foreach (var user in userList)
                             {
@@ -94,7 +69,7 @@ namespace PracticeNumber2
                         {
                             Console.WriteLine("\nNo se encuentran usuarios registrados.");
                         }
-                        
+
                         break;
                     case 3:
                         Console.Write("\nIngrese el Id: ");
@@ -130,7 +105,7 @@ namespace PracticeNumber2
                         Console.Write("\nIngrese el Id: ");
                         var idDelete = int.TryParse(Console.ReadLine(), out int idElegido);
                         var userDelete = userList.Where(x => x.Id == idElegido).FirstOrDefault();
-                        if(userDelete != null)
+                        if (userDelete != null)
                         {
                             Console.WriteLine("Id: " + userDelete.Id + " // " + "Nombre: " + userDelete.Name + " // " + "Mail: " + userDelete.Mail + " // " + "Contraseña: " + userDelete.Password);
 
@@ -146,7 +121,7 @@ namespace PracticeNumber2
                         {
                             Console.WriteLine("\nId no encontrado.");
                         }
-                        
+
                         break;
                 }
 
